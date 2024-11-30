@@ -31,4 +31,11 @@ jobs:
 
     # Langkah 4: Jalankan script Python
     - name: Run script
-      run: python Monitor.py  
+      run: python Monitor.py  # Jalankan script yang memeriksa URL dan menyimpan hasil
+
+    # Langkah 5: Upload processed file as artifact
+    - name: Upload processed file as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: website-status-output  # Nama artifact
+        path: website_status.csv     # Path file output yang dihasilkan
