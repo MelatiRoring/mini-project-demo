@@ -1,0 +1,37 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main  # Workflow akan dijalankan setiap kali ada push ke branch main
+  pull_request:
+    branches:
+      - main  # Workflow akan dijalankan saat pull request dibuat ke branch main
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest  # Menjalankan workflow di runner Ubuntu
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3  # Checkout repository agar workflow bisa mengakses kode
+
+    - name: Setup Python
+      uses: actions/setup-python@v4  # Menginstal Python
+      with:
+        python-version: '3.8'  # Versi Python yang digunakan
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # Install dependensi dari file requirements.txt, jika ada
+
+    - name: Run Script
+      run: python process_csv.py  # Jalankan script Python Anda
+
+    - name: Upload Output as Artifact
+      if: success()  # Hanya diupload jika script berhasil dijalankan
+      uses: actions/upload-artifact@v3
+      with:
+        name: output
+        path: output/  # Mengunggah folder output yang dihasilkan oleh script Python
