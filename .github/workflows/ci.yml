@@ -31,4 +31,4 @@ jobs:
 
     # Langkah 4: Jalankan script Python
     - name: Run script
-      run: python process_csv.py  # Ganti dengan nama file Python Anda
+      run: python Monitor.py  
